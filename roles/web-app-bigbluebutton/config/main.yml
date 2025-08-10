@@ -7,7 +7,7 @@ features:
                             # @todo fix this
   ldap:               false
   oidc:               true
-  central_database:   false
+  central_database:   false # Propably required for backup routines
   logout:             true
 server:
   csp:
@@ -20,3 +20,9 @@ server:
     canonical:
       - "meet.{{ primary_domain }}"
 credentials: {}
+
+docker:
+  services:
+    database:
+      # This is set to true to pass integration test, doesn't have any other function
+      enabled: true

@@ -1,22 +1,9 @@
 - block:
-    - name: "pkgmgr install"
-      include_role:
-        name: pkgmgr-install
-      vars:
-        package_name: "{{ bkp_docker_to_local_pkg }}"
-
-    - name: "Retrieve {{ bkp_docker_to_local_pkg }} path from pkgmgr"
-      command: "pkgmgr path {{ bkp_docker_to_local_pkg }}"
-      register: pkgmgr_output
-      changed_when: false
-
-    - name: Set fact for backup_docker_to_local_folder
-      set_fact:
-        backup_docker_to_local_folder: "{{ pkgmgr_output.stdout }}/"
-      changed_when: false
+    - include_tasks: 01_pkgmgr_routines.yml
+      when: backup_docker_to_local_folder is not defined
 
     - name: "reset (if enabled)"
-      include_tasks: reset.yml
+      include_tasks: 02_reset.yml
       when: mode_reset | bool
 
     - name: configure sys-bkp-docker-2-loc-everything.infinito.service
@@ -41,15 +28,12 @@
       vars:
         on_calendar:  "{{on_calendar_backup_docker_to_local}}"
 
-    - name: run the backup_docker_to_local tasks once
-      set_fact:
-        run_once_sys_bkp_docker_2_loc: true
-  
+    - include_tasks: "{{ playbook_dir }}/tasks/utils/load_handlers.yml"
   when: 
     - run_once_sys_bkp_docker_2_loc is not defined
-    - database_type is defined and database_type
+    - database_enabled | bool
 
-- name: "include seed-database-to-backup.yml"
-  include_tasks: seed-database-to-backup.yml
+- name: "include 03_seed-database-to-backup.yml"
+  include_tasks: 03_seed-database-to-backup.yml
   when:
-    - database_type is defined and database_type
+    - database_enabled | bool
