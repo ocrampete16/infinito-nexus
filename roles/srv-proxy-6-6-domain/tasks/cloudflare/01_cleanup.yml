@@ -1,0 +1,12 @@
+- name: "Purge everything from Cloudflare cache for domain {{ domain }}"
+  ansible.builtin.uri:
+    url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/purge_cache"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ certbot_dns_api_token }}"
+      Content-Type: "application/json"
+    body:
+      purge_everything: true
+    body_format: json
+    return_content: yes
+  register: cf_purge

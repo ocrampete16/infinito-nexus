@@ -1,0 +1,35 @@
+# roles/srv-proxy-6-6-domain/tasks/02_enable_cf_dev_mode.yml
+---
+# Enables Cloudflare Development Mode (bypasses cache for ~3 hours).
+# Uses the same auth token as in 01_cleanup.yml: certbot_dns_api_token
+# Assumes `domain` and (optionally) `cf_zone_id` are available.
+# Safe to run repeatedly; only changes when the mode is not already "on".
+
+- name: "Read current Cloudflare development_mode setting"
+  ansible.builtin.uri:
+    url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/settings/development_mode"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ certbot_dns_api_token }}"
+      Content-Type: "application/json"
+    return_content: yes
+  register: cf_dev_mode_current
+
+- name: "Enable Cloudflare Development Mode"
+  ansible.builtin.uri:
+    url: "https://api.cloudflare.com/client/v4/zones/{{ cf_zone_id }}/settings/development_mode"
+    method: PATCH
+    headers:
+      Authorization: "Bearer {{ certbot_dns_api_token }}"
+      Content-Type: "application/json"
+    body:
+      value: "on"
+    body_format: json
+    return_content: yes
+  register: cf_dev_mode_enable
+  changed_when: >
+    cf_dev_mode_current.json.result.value is defined and
+    cf_dev_mode_current.json.result.value != 'on'
+  when:
+    - cf_zone_id is defined
+    - cf_dev_mode_current.json.result.value | default('off') != 'on'

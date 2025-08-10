@@ -1,7 +1,8 @@
 # run_once_srv_proxy_6_6_domain: deactivated
-- name: Cleanup Domain
-  include_tasks: cleanup.yml
-  when: mode_cleanup | bool
+
+- block:
+  - include_tasks: "01_cloudflare.yml"
+  when: dns_provider == "cloudflare"
 
 - include_tasks: "{{ playbook_dir }}/tasks/utils/load_handlers.yml"
   vars:
