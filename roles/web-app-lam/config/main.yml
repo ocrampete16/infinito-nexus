@@ -1,5 +1,8 @@
-images:
-  lam:                          "ghcr.io/ldapaccountmanager/lam:latest"
+docker:
+  services:
+    lam:
+      image:   ghcr.io/ldapaccountmanager/lam
+      version: latest
 oauth2_proxy:
   application:                  application
   port:                         80
@@ -10,7 +13,6 @@ features:
   css:                          true
   port-ui-desktop:              true
   ldap:                         true
-  central_database:             false
   oauth2:                       true
   logout:                       true
 server:
