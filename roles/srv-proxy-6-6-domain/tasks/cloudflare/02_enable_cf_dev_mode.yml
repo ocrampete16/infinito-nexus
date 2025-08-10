@@ -30,6 +30,3 @@
   changed_when: >
     cf_dev_mode_current.json.result.value is defined and
     cf_dev_mode_current.json.result.value != 'on'
-  when:
-    - cf_zone_id is defined
-    - cf_dev_mode_current.json.result.value | default('off') != 'on'

@@ -1,3 +1,14 @@
+# Initialize cache dict (works within the play; persists if fact cache is enabled)
+- name: "Ensure cf_zone_ids cache dict exists"
+  set_fact:
+    cf_zone_ids: "{{ cf_zone_ids | default({}) }}"
+
+# Use cached zone_id if available for the apex (to_primary_domain)
+- name: "Load cf_zone_id from cache if present"
+  set_fact:
+    cf_zone_id: "{{ (cf_zone_ids | default({})).get(domain | to_primary_domain, false) }}"
+
+# Only look up from Cloudflare if we still don't have it
 - name: "Ensure Cloudflare Zone ID is known for {{ domain }}"
   vars:
     cf_api_url: "https://api.cloudflare.com/client/v4/zones"
@@ -9,21 +20,25 @@
       Content-Type: "application/json"
     return_content: yes
   register: cf_zone_lookup_dev
+  changed_when: false
   when:
-    - cf_zone_id is not defined
+    - not cf_zone_id
 
-- name: "Set fact cf_zone_id (if not already set)"
+- name: "Set fact cf_zone_id and update cache dict"
   set_fact:
     cf_zone_id: "{{ cf_zone_lookup_dev.json.result[0].id }}"
+    cf_zone_ids: >-
+      {{ (cf_zone_ids | default({}))
+         | combine({ (domain | to_primary_domain): cf_zone_lookup_dev.json.result[0].id }) }}
   when:
-    - cf_zone_id is not defined
+    - not cf_zone_id
     - cf_zone_lookup_dev.json.result | length > 0
 
 - name: "Fail if no Cloudflare zone found for {{ domain | to_primary_domain }}"
   ansible.builtin.fail:
     msg: "No Cloudflare zone found for {{ domain | to_primary_domain }} — aborting!"
   when:
-    - cf_zone_id is not defined
+    - not cf_zone_id
     - cf_zone_lookup_dev.json.result | length == 0
 
 - name: activate cloudflare cache development mode
