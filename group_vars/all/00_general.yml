@@ -1,4 +1,4 @@
-INFINITO_ENVIRONMENT:       "production"
+INFINITO_ENVIRONMENT:     "production"  # Possible values: production, development
 
 HOST_CURRENCY:            "EUR"
 HOST_TIMEZONE:            "UTC"
