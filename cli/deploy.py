@@ -16,14 +16,16 @@ def run_ansible_playbook(
     skip_tests=False,
     skip_validation=False,
     skip_build=False,
-    cleanup=False
+    cleanup=False,
+    logs=False
 ):
     start_time = datetime.datetime.now()
     print(f"\n▶️ Script started at: {start_time.isoformat()}\n")
 
     if cleanup:
-        print("\n🧹 Cleaning up project (make clean)...\n")
-        subprocess.run(["make", "clean"], check=True)
+        cleanup_command = ["make", "clean-keep-logs"] if logs else ["make", "clean"]
+        print("\n🧹 Cleaning up project (" + " ".join(cleanup_command) +")...\n")
+        subprocess.run(cleanup_command, check=True)
     else:
         print("\n⚠️ Skipping build as requested.\n")
 
@@ -180,6 +182,10 @@ def main():
         "-v", "--verbose", action="count", default=0,
         help="Increase verbosity level. Multiple -v flags increase detail (e.g., -vvv for maximum log output)."
     )
+    parser.add_argument(
+        "--logs", action="store_true",
+        help="Keep the CLI logs during cleanup command"
+    )
 
     args = parser.parse_args()
     validate_application_ids(args.inventory, args.id)
@@ -190,6 +196,7 @@ def main():
         "mode_update": args.update,
         "mode_backup": args.backup,
         "mode_cleanup": args.cleanup,
+        "mode_logs": args.logs,
         "enable_debug": args.debug,
         "host_type": args.host_type
     }
@@ -204,7 +211,8 @@ def main():
         skip_tests=args.skip_tests,
         skip_validation=args.skip_validation,
         skip_build=args.skip_build,
-        cleanup=args.cleanup
+        cleanup=args.cleanup,
+        logs=args.logs
     )
 
 

@@ -123,7 +123,10 @@ if __name__ == "__main__":
     # Parse flags
     sound_enabled = '--sound' in sys.argv and (sys.argv.remove('--sound') or True)
     no_signal = '--no-signal' in sys.argv and (sys.argv.remove('--no-signal') or True)
-    log_enabled = '--log' in sys.argv and (sys.argv.remove('--log') or True)
+    # Guaranty that --log is passed to deploy command
+    log_enabled = '--log' in sys.argv
+    if log_enabled and (len(sys.argv) < 2 or sys.argv[1] != 'deploy'):
+        sys.argv.remove('--log')
     git_clean = '--git-clean' in sys.argv and (sys.argv.remove('--git-clean') or True)
     infinite = '--infinite' in sys.argv and (sys.argv.remove('--infinite') or True)
     alarm_timeout = 60

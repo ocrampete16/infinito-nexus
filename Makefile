@@ -21,6 +21,10 @@ EXTRA_USERS := $(shell \
 
 .PHONY: build install test
 
+clean-keep-logs:
+	@echo "🧹 Cleaning ignored files but keeping logs/…"
+	git clean -fdX -- ':!logs' ':!logs/**'
+
 clean:
 	@echo "Removing ignored git files"
 	git clean -fdX
