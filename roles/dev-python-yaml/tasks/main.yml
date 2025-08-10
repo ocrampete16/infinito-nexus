@@ -1,7 +1,7 @@
 ---
 - name: python-yaml install
-  pacman:
-    name: python-yaml
+  package:
+    name: python3-yaml
     state: present
   when: run_once_dev_python_yaml is not defined
 

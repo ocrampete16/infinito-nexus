@@ -1,5 +1,5 @@
 - name: install yay
-  community.general.pacman:
+  package:
     name:
       - base-devel
       - patch

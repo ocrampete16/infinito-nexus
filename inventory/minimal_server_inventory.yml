@@ -1,0 +1,320 @@
+all:
+  children:
+    # svc-db-mariadb: {}
+    # svc-db-memcached: {}
+    # svc-db-openldap: {}
+    # svc-db-postgres: {}
+    # svc-db-redis: {}
+    # svc-opt-ssd-hdd: {}
+    # svc-opt-swapfile: {}
+    # svc-prx-openresty: {}
+    # update-apt: {}
+    # update-compose: {}
+    # update-docker: {}
+    # update-pacman: {}
+    # update-pip: {}
+    # update-pkgmgr: {}
+    # update-yay: {}
+    # util-srv-corporate-identity: {}
+    # web-app-akaunting: {}
+    # web-app-attendize: {}
+    # web-app-baserow: {}
+    # web-app-bigbluebutton: {}
+    # web-app-bluesky: {}
+    # web-app-bookwyrm: {}
+    # web-app-chess: {}
+    # web-app-collabora: {}
+    # web-app-coturn: {}
+    # web-app-discourse: {}
+    # web-app-elk: {}
+    # web-app-espocrm: {}
+    # web-app-friendica: {}
+    # web-app-funkwhale: {}
+    # web-app-fusiondirectory: {}
+    # web-app-gitea: {}
+    # web-app-gitlab: {}
+    # web-app-jenkins: {}
+    # web-app-joomla: {}
+    web-app-keycloak: {}
+    # web-app-lam: {}
+    # web-app-libretranslate: {}
+    # web-app-listmonk: {}
+    # web-app-mailu: {}
+    # web-app-mastodon: {}
+    # web-app-matomo: {}
+    # web-app-matrix: {}
+    # web-app-matrix-ansible: {}
+    # web-app-mediawiki: {}
+    # web-app-mig: {}
+    # web-app-mobilizon: {}
+    # web-app-moodle: {}
+    # web-app-mybb: {}
+    # web-app-navigator: {}
+    # web-app-nextcloud: {}
+    # web-app-oauth2-proxy: {}
+    # web-app-openproject: {}
+    # web-app-peertube: {}
+    # web-app-pgadmin: {}
+    # web-app-phpldapadmin: {}
+    # web-app-phpmyadmin: {}
+    # web-app-pixelfed: {}
+    # web-app-port-ui: {}
+    # web-app-postmarks: {}
+    # web-app-pretix: {}
+    # web-app-roulette-wheel: {}
+    # web-app-snipe-it: {}
+    # web-app-socialhome: {}
+    # web-app-sphinx: {}
+    # web-app-syncope: {}
+    # web-app-taiga: {}
+    # web-app-wordpress: {}
+    # web-app-xmpp: {}
+    # web-app-yourls: {}
+    # web-opt-rdr-domains: {}
+    # web-opt-rdr-www: {}
+    # web-svc-asset: {}
+    # web-svc-cdn: {}
+    # web-svc-file: {}
+    # web-svc-html: {}
+    # web-svc-legal: {}
+    web-svc-logout: {}
+    # web-svc-simpleicons: {}
+  hosts:
+    pallepille.de: {}
+# svc-db-mariadb:
+#   hosts:
+#   - pallepille.de
+# svc-db-memcached:
+#   hosts:
+#   - pallepille.de
+# svc-db-openldap:
+#   hosts:
+#   - pallepille.de
+# svc-db-postgres:
+#   hosts:
+#   - pallepille.de
+# svc-db-redis:
+#   hosts:
+#   - pallepille.de
+# svc-opt-ssd-hdd:
+#   hosts:
+#   - pallepille.de
+# svc-opt-swapfile:
+#   hosts:
+#   - pallepille.de
+# svc-prx-openresty:
+#   hosts:
+#   - pallepille.de
+# update-apt:
+#   hosts:
+#   - pallepille.de
+# update-compose:
+#   hosts:
+#   - pallepille.de
+# update-docker:
+#   hosts:
+#   - pallepille.de
+# update-pacman:
+#   hosts:
+#   - pallepille.de
+# update-pip:
+#   hosts:
+#   - pallepille.de
+# update-pkgmgr:
+#   hosts:
+#   - pallepille.de
+# update-yay:
+#   hosts:
+#   - pallepille.de
+# util-srv-corporate-identity:
+#   hosts:
+#   - pallepille.de
+# web-app-akaunting:
+#   hosts:
+#   - pallepille.de
+# web-app-attendize:
+#   hosts:
+#   - pallepille.de
+# web-app-baserow:
+#   hosts:
+#   - pallepille.de
+# web-app-bigbluebutton:
+#   hosts:
+#   - pallepille.de
+# web-app-bluesky:
+#   hosts:
+#   - pallepille.de
+# web-app-bookwyrm:
+#   hosts:
+#   - pallepille.de
+# web-app-chess:
+#   hosts:
+#   - pallepille.de
+# web-app-collabora:
+#   hosts:
+#   - pallepille.de
+# web-app-coturn:
+#   hosts:
+#   - pallepille.de
+# web-app-discourse:
+#   hosts:
+#   - pallepille.de
+# web-app-elk:
+#   hosts:
+#   - pallepille.de
+# web-app-espocrm:
+#   hosts:
+#   - pallepille.de
+# web-app-friendica:
+#   hosts:
+#   - pallepille.de
+# web-app-funkwhale:
+#   hosts:
+#   - pallepille.de
+# web-app-fusiondirectory:
+#   hosts:
+#   - pallepille.de
+# web-app-gitea:
+#   hosts:
+#   - pallepille.de
+# web-app-gitlab:
+#   hosts:
+#   - pallepille.de
+# web-app-jenkins:
+#   hosts:
+#   - pallepille.de
+# web-app-joomla:
+#   hosts:
+#   - pallepille.de
+web-app-keycloak:
+  hosts:
+    pallepille.de: {}
+# web-app-lam:
+#   hosts:
+#   - pallepille.de
+# web-app-libretranslate:
+#   hosts:
+#   - pallepille.de
+# web-app-listmonk:
+#   hosts:
+#   - pallepille.de
+# web-app-mailu:
+#   hosts:
+#   - pallepille.de
+# web-app-mastodon:
+#   hosts:
+#   - pallepille.de
+# web-app-matomo:
+#   hosts:
+#   - pallepille.de
+# web-app-matrix:
+#   hosts:
+#   - pallepille.de
+# web-app-matrix-ansible:
+#   hosts:
+#   - pallepille.de
+# web-app-mediawiki:
+#   hosts:
+#   - pallepille.de
+# web-app-mig:
+#   hosts:
+#   - pallepille.de
+# web-app-mobilizon:
+#   hosts:
+#   - pallepille.de
+# web-app-moodle:
+#   hosts:
+#   - pallepille.de
+# web-app-mybb:
+#   hosts:
+#   - pallepille.de
+# web-app-navigator:
+#   hosts:
+#   - pallepille.de
+# web-app-nextcloud:
+#   hosts:
+#   - pallepille.de
+# web-app-oauth2-proxy:
+#   hosts:
+#   - pallepille.de
+# web-app-openproject:
+#   hosts:
+#   - pallepille.de
+# web-app-peertube:
+#   hosts:
+#   - pallepille.de
+# web-app-pgadmin:
+#   hosts:
+#   - pallepille.de
+# web-app-phpldapadmin:
+#   hosts:
+#   - pallepille.de
+# web-app-phpmyadmin:
+#   hosts:
+#   - pallepille.de
+# web-app-pixelfed:
+#   hosts:
+#   - pallepille.de
+# web-app-port-ui:
+#   hosts:
+#   - pallepille.de
+# web-app-postmarks:
+#   hosts:
+#   - pallepille.de
+# web-app-pretix:
+#   hosts:
+#   - pallepille.de
+# web-app-roulette-wheel:
+#   hosts:
+#   - pallepille.de
+# web-app-snipe-it:
+#   hosts:
+#   - pallepille.de
+# web-app-socialhome:
+#   hosts:
+#   - pallepille.de
+# web-app-sphinx:
+#   hosts:
+#   - pallepille.de
+# web-app-syncope:
+#   hosts:
+#   - pallepille.de
+# web-app-taiga:
+#   hosts:
+#   - pallepille.de
+# web-app-wordpress:
+#   hosts:
+#   - pallepille.de
+# web-app-xmpp:
+#   hosts:
+#   - pallepille.de
+# web-app-yourls:
+#   hosts:
+#   - pallepille.de
+# web-opt-rdr-domains:
+#   hosts:
+#   - pallepille.de
+# web-opt-rdr-www:
+#   hosts:
+#   - pallepille.de
+# web-svc-asset:
+#   hosts:
+#   - pallepille.de
+# web-svc-cdn:
+#   hosts:
+#   - pallepille.de
+# web-svc-file:
+#   hosts:
+#   - pallepille.de
+# web-svc-html:
+#   hosts:
+#   - pallepille.de
+# web-svc-legal:
+#   hosts:
+#   - pallepille.de
+web-svc-logout:
+  hosts:
+    pallepille.de: {}
+# web-svc-simpleicons:
+#   hosts:
+#   - pallepille.de

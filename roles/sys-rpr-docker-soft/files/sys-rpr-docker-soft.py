@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python3
 #
 # Restart Docker-Compose configurations with exited or unhealthy containers
 #
@@ -37,9 +37,9 @@ def main(base_directory):
     errors = 0
     waiting_time = 600
     blocker_running = True
-    
+
     while blocker_running:
-        try: 
+        try:
             bash("systemctl is-active --quiet sys-bkp-docker-2-loc.infinito.service")
             bash("systemctl is-active --quiet update-docker.infinito.service")
             print("Backup is running.")
@@ -48,17 +48,17 @@ def main(base_directory):
         except:
             blocker_running = False
             print("No blocking service is running.")
-    
+
     unhealthy_container_names = print_bash("docker ps --filter health=unhealthy --format '{{.Names}}'")
     exited_container_names = print_bash("docker ps --filter status=exited --format '{{.Names}}'")
     failed_containers = unhealthy_container_names + exited_container_names
-    
+
     unfiltered_failed_docker_compose_repositories = [container.split('-')[0] for container in failed_containers]
     filtered_failed_docker_compose_repositories = list(dict.fromkeys(unfiltered_failed_docker_compose_repositories))
-    
+
     for repo in filtered_failed_docker_compose_repositories:
         compose_file_path = find_docker_compose_file(os.path.join(base_directory, repo))
-        
+
         if compose_file_path:
             print("Restarting unhealthy container in:", compose_file_path)
             project_path = os.path.dirname(compose_file_path)
@@ -77,7 +77,7 @@ def main(base_directory):
             print("Error: Docker Compose file not found for:", repo)
             errors += 1
 
-    
+
     print("Finished restart procedure.")
     exit(errors)
 
@@ -85,5 +85,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Restart Docker-Compose configurations with exited or unhealthy containers.")
     parser.add_argument("base_directory", type=str, help="Base directory where Docker Compose configurations are located.")
     args = parser.parse_args()
-    
+
     main(args.base_directory)

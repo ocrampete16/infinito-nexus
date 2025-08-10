@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import psutil
 import shutil
 import os
@@ -12,7 +13,7 @@ parser.add_argument('--backups-folder-path',type=str,dest='backups_folder_path',
 args = parser.parse_args()
 
 def print_used_disc_space(backups_folder_path):
-    print("%d %% of disk %s are used" % (psutil.disk_usage(backups_folder_path).percent,backups_folder_path))  
+    print("%d %% of disk %s are used" % (psutil.disk_usage(backups_folder_path).percent,backups_folder_path))
 
 def is_directory_used_by_another_process(directory_path):
     command= "lsof " + directory_path
@@ -32,14 +33,14 @@ def isDirectoryDeletable(version, versions, version_path):
     if version == versions[-1]:
         print("Directory %s contains the last version of the backup. Skipped." % (version_path))
         return False
-    
+
     if is_directory_used_by_another_process(version_path):
         print("Directory %s is used by another process. Skipped." % (version_path))
         return False
-    
+
     print(f"Directory {version_path} can be deleted.")
     return True
-    
+
 def deleteVersion(version_path, backups_folder_path):
     print("Deleting %s to free space." % (version_path))
     current_disc_usage_percent=psutil.disk_usage(backups_folder_path).percent
@@ -67,7 +68,7 @@ def count_total_version_folders(backups_folder_path):
 def average_version_directories_per_application(backups_folder_path):
     total_app_directories = count_total_application_directories(backups_folder_path)
     total_version_folders = count_total_version_folders(backups_folder_path)
-    
+
     if total_app_directories == 0:
         return 0
 
@@ -90,18 +91,18 @@ def deleteIteration(backups_folder_path,average_version_directories_per_applicat
             print(f"Iterating over backup application: {application_directory}")
             # The directory which contains all backup versions of the application
             versions_directory = os.path.join(host_backup_directory_path, application_directory) + "/"
-                        
+
             versions = os.listdir(versions_directory)
             versions.sort(reverse=False)
-            version_iteration=0 
+            version_iteration=0
             while version_iteration < getAmountOfIteration(versions,average_version_directories_per_application):
                 print_used_disc_space(backups_folder_path)
                 version = versions[version_iteration]
                 version_path=os.path.join(versions_directory, version)
                 if isDirectoryDeletable(version, versions, version_path):
                     deleteVersion(version_path, backups_folder_path)
-                version_iteration += 1 
-                     
+                version_iteration += 1
+
 def check_time_left(start_time, time_limit):
     """
     Checks if there is time left within the given time limit.
@@ -143,11 +144,11 @@ while isSmallerThenMaximumBackupSize(maximum_backup_size_percent, backups_folder
     print(f"Delete Iteration: {itteration_counter}")
     if not check_time_left(start_time, time_limit):
         raise TimeLimitExceededException()
-    
+
     average_version_directories = average_version_directories_per_application(backups_folder_path)
     print(f"Average version directories per application directory: {average_version_directories}")
-    deleteIteration(backups_folder_path, average_version_directories)    
+    deleteIteration(backups_folder_path, average_version_directories)
     itteration_counter += 1
 
-print_used_disc_space(backups_folder_path)            
+print_used_disc_space(backups_folder_path)
 print("Cleaning up finished.")

@@ -1,5 +1,5 @@
 - name: install administration tools
-  pacman:
+  package:
     name:
       - base-devel
       - cmake

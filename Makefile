@@ -43,7 +43,7 @@ mig: list tree
 dockerignore:
 	@echo Create dockerignore
 	cat .gitignore > .dockerignore
-	echo ".git" >> .dockerignore 
+	echo ".git" >> .dockerignore
 
 messy-build: dockerignore
 	@echo "🔧 Generating users defaults → $(USERS_OUT)…"
@@ -69,9 +69,9 @@ messy-build: dockerignore
 	  echo "  ✅ $$out"; \
 	)
 
-messy-test: 
+messy-test:
 	@echo "🧪 Running Python tests…"
-	PYTHONPATH=. python -m unittest discover -s tests
+	PYTHONPATH=. python -m unittest discover -s tests --failfast
 	@echo "📑 Checking Ansible syntax…"
 	ansible-playbook playbook.yml --syntax-check
 
@@ -83,3 +83,16 @@ build: clean messy-build
 
 test: build messy-test
 	@echo "Full test with build before was executed."
+
+# Custom commands
+generate-server-inventory:
+	./main.py build inventory full --host pallepille.de -c roles/server_categories.yml -o inventory/full_server_inventory.yml
+
+full-deploy:
+	./main.py deploy --debug -vvv -T server --limit pallepille.de inventory/minimal_server_inventory.yml
+
+deploy:
+	./main.py deploy -T server --limit pallepille.de --skip-build --skip-tests --skip-validation inventory/minimal_server_inventory.yml
+
+deploy-debug:
+	./main.py deploy --debug -vvv -T server --limit pallepille.de --skip-build --skip-tests --skip-validation inventory/minimal_server_inventory.yml

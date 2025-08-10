@@ -103,6 +103,7 @@ def failure_with_warning_loop(no_signal, sound_enabled, alarm_timeout=60):
     On failure: Plays warning sound in a loop.
     Aborts after alarm_timeout seconds and exits with code 1.
     """
+    sys.exit(1)
     if not no_signal:
         Sound.play_finished_failed_sound()
     print(color_text("Warning: command failed. Press Ctrl+C to stop warnings.", Fore.RED))
@@ -138,7 +139,7 @@ if __name__ == "__main__":
         except Exception:
             print(color_text("Invalid --alarm-timeout value!", Fore.RED))
             sys.exit(1)
-            
+
     # Segfault handler
     def segv_handler(signum, frame):
         if not no_signal:

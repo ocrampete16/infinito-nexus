@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import sys
 import subprocess
@@ -38,9 +39,9 @@ if __name__ == "__main__":
             dir_path = dir_entry.path
             dir_name = os.path.basename(dir_path)
             print(f"Checking directory: {dir_path}")
-            
+
             docker_compose_file = os.path.join(dir_path, "docker-compose.yml")
-            
+
             if os.path.isfile(docker_compose_file):
                 print(f"Found docker-compose.yml in {dir_path}.")
                 if dir_name == "web-app-mailu":

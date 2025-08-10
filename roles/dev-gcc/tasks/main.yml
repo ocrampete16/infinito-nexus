@@ -1,6 +1,6 @@
 ---
 - name: Install GCC
-  pacman:
+  package:
     name: gcc
     state: present
     update_cache: yes

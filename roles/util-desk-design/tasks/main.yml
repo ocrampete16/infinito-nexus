@@ -1,6 +1,6 @@
 - name: install designer tools
-  community.general.pacman:
-    name: 
+  package:
+    name:
       - gimp
       - blender
     state: present

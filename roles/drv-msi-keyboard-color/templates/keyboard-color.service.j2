@@ -4,4 +4,4 @@ OnFailure=sys-alm-compose.infinito@%n.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/python /opt/keyboard_color.py {{ vendor_and_product_id }}
+ExecStart=/usr/bin/python3 /opt/keyboard_color.py {{ vendor_and_product_id }}

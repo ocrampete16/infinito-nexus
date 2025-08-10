@@ -7,7 +7,7 @@
         - subnet: "{{ postgres_subnet }}"
 
   - name: "include docker-compose role"
-    include_role: 
+    include_role:
       name: docker-compose
 
   - name: Wait for Postgres inside the container
@@ -18,10 +18,10 @@
     delay: 5
 
   - name: install python-psycopg2
-    pacman: 
+    package:
       name: python-psycopg2
       state: present
-      
+
   - include_tasks: utils/run_once.yml
   when: run_once_svc_db_postgres is not defined
 

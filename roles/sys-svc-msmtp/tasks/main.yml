@@ -1,5 +1,5 @@
-- name: install msmtp msmtp-mta 
-  community.general.pacman:
+- name: install msmtp msmtp-mta
+  package:
     name:
       - msmtp
       - msmtp-mta

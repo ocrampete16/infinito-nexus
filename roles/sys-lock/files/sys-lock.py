@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import argparse
 import subprocess
 import time
@@ -81,15 +82,15 @@ def main(services, ignored_services, timeout_sec):
     print(f"Services to handle: {services_with_suffix}")
     print(f"Services to ignore: {ignored_services_with_suffix}")
     print(f"Services filtered: {filtered_services}")
-    
+
     print("Waiting for services to stop.")
-    
+
     attempt = 0
     max_attempts = get_max_attempts(timeout_sec)
     while check_any_service_active(filtered_services):
         attempt = wait_for_all_services_to_stop(filtered_services, max_attempts, attempt)
     print("All required services have stopped.")
-    
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Blocks the code execution as long as defined services are running. Terminates with 0 when all services stopped')
     parser.add_argument('services', nargs='+', help='List of services to apply the action to.')

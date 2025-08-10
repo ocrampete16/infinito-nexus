@@ -1,5 +1,5 @@
 - name: install git
-  community.general.pacman:
+  package:
     name: git
     state: present
   become: true
@@ -14,7 +14,7 @@
   command: gitconfig --merge-option rebase --name "{{users.client.full_name}}" --email "{{users.client.email}}" --website "{{users.client.website}}" --signing gpg --gpg-key "{{users.client.gpg}}"
   when: run_once_desk_git is not defined
   become: false
-  
+
 - name: run the gitconfig tasks once
   set_fact:
     run_once_desk_git: true

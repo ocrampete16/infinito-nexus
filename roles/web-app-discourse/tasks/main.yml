@@ -3,17 +3,17 @@
   when: run_once_web_app_discourse is not defined
   block:
   - name: "reset (if enabled)"
-    include_tasks: reset.yml 
+    include_tasks: reset.yml
     when: mode_reset | bool
 
   # Necessary for building: https://chat.openai.com/share/99d258cc-294b-4924-8eef-02fe419bb838
   - name: install which
-    pacman:
+    package:
       name: which
       state: present
 
   - name: "load docker, db and proxy for {{application_id}}"
-    include_role: 
+    include_role:
       name: cmp-db-docker-proxy
 
   - name: pull docker repository
@@ -32,7 +32,7 @@
       state: directory
 
   - name: "copy configuration to {{discourse_application_yml_destination}}"
-    template: 
+    template:
       src: config.yml.j2
       dest: "{{ discourse_application_yml_destination }}"
       mode: '0640'

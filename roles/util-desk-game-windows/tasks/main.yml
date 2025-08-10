@@ -1,5 +1,5 @@
 - name: Install core gaming tools from pacman
-  pacman:
+  package:
     name:
       - steam
       - lutris

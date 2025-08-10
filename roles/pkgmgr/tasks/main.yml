@@ -31,10 +31,24 @@
   when: run_once_pkgmgr is not defined
 
 - name: create config.yaml
-  template: 
+  template:
     src: config.yaml.j2
     dest: "{{pkgmgr_config_path}}"
   become: yes
+  when: run_once_pkgmgr is not defined
+
+- name: Ensure python3-venv is installed
+  package:
+    name: python3-venv
+    state: present
+  become: yes
+  when: run_once_pkgmgr is not defined
+
+- name: Create virtual environment for pkgmgr
+  command: python3 -m venv ~/.venvs/pkgmgr
+  become: yes
+  args:
+    creates: ~/.venvs/pkgmgr/bin/activate
   when: run_once_pkgmgr is not defined
 
 - name: Run the Package Manager install command to create an alias for Kevins package manager

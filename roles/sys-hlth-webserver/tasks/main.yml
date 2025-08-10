@@ -1,6 +1,6 @@
 - name: Install required Python modules
-  pacman:
-    name: python-requests
+  package:
+    name: python3-requests
     state: present
   when: run_once_sys_hlth_webserver is not defined
 
@@ -18,7 +18,7 @@
   when: run_once_sys_hlth_webserver is not defined
 
 - name: create sys-hlth-webserver.infinito.service
-  template: 
+  template:
     src: sys-hlth-webserver.service.j2
     dest: /etc/systemd/system/sys-hlth-webserver.infinito.service
   notify: reload sys-hlth-webserver.infinito.service
@@ -40,4 +40,3 @@
   set_fact:
     run_once_sys_hlth_webserver: true
   when: run_once_sys_hlth_webserver is not defined
-

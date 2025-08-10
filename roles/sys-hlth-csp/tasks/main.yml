@@ -5,6 +5,20 @@
     package_name: checkcsp
   when: run_once_sys_hlth_csp is not defined
 
+- name: check if docker is available
+  command: docker --version
+  register: docker_check
+  failed_when: false
+  changed_when: false
+  when: run_once_sys_hlth_csp is not defined
+
+- name: fail if docker is not available
+  fail:
+    msg: "Docker is not installed or not available in PATH. The checkcsp build command requires Docker."
+  when:
+    - run_once_sys_hlth_csp is not defined
+    - docker_check.rc != 0
+
 - name: rebuild checkcsp docker image
   shell: checkcsp build
   # Todo this could be optimized in the future

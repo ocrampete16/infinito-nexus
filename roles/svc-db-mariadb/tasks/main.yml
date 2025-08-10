@@ -31,7 +31,7 @@
   register: setup_mariadb_container_result
 
 - name: install python-mysqlclient
-  pacman: 
+  package:
     name: python-mysqlclient
     state: present
   when: run_once_svc_db_mariadb is not defined

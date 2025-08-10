@@ -8,6 +8,6 @@
       - epson-inkjet-printer-escpr2
   become: false
 - name: install imagescan
-  community.general.pacman:
+  package:
     name: imagescan
     state: present

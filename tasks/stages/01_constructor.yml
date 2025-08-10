@@ -14,6 +14,10 @@
     set_fact:
       system_email: "{{ default_system_email | combine(system_email | default({}, true), recursive=True) }}"
 
+  - name: Merge networks definitions
+    set_fact:
+      networks: "{{ defaults_networks | combine(networks | default({}, true), recursive=True) }}"
+
   - name: Merge application definitions
     set_fact:
       applications: "{{ defaults_applications | merge_with_defaults(applications | default({}, true)) }}"
@@ -21,43 +25,43 @@
   - name: Merge current play applications
     set_fact:
       current_play_applications: >-
-        {{ 
+        {{
           applications |
           applications_if_group_and_deps(group_names)
         }}
 
   - name: Merge current play domain definitions
     set_fact:
-      current_play_domains: >- 
+      current_play_domains: >-
         {{  current_play_applications |
-            canonical_domains_map(primary_domain) | 
-            combine(domains | default({}, true), recursive=True) 
+            canonical_domains_map(primary_domain) |
+            combine(domains | default({}, true), recursive=True)
         }}
-  
+
   - name: Merge domain definitions for all domains
     set_fact:
       domains: >-
-        {{ 
-          defaults_applications | 
-          canonical_domains_map(primary_domain) | 
-          combine(current_play_domains, recursive=True) 
+        {{
+          defaults_applications |
+          canonical_domains_map(primary_domain) |
+          combine(current_play_domains, recursive=True)
         }}
   - name: Merge redirect_domain_mappings
     set_fact:
       # The following mapping is necessary to define the exceptions for domains which are created, but which aren't used
       redirect_domain_mappings: "{{
-        []  | 
-        add_redirect_if_group('web-svc-asset', domains | get_domain('web-svc-asset'), domains | get_domain('web-svc-file'),  group_names) | 
+        []  |
+        add_redirect_if_group('web-svc-asset', domains | get_domain('web-svc-asset'), domains | get_domain('web-svc-file'),  group_names) |
         merge_mapping(redirect_domain_mappings| default([]), 'source')
         }}"
 
-  - name: Set current play redirect domain mappings 
+  - name: Set current play redirect domain mappings
     set_fact:
       redirect_domain_mappings: >-
-        {{ 
+        {{
           current_play_applications |
-          domain_mappings(primary_domain) | 
-          merge_mapping(redirect_domain_mappings, 'source') 
+          domain_mappings(primary_domain) |
+          merge_mapping(redirect_domain_mappings, 'source')
         }}
 
   - name: Set current play all domains incl. www redirect if enabled
@@ -66,7 +70,7 @@
         {{
           (current_play_domains |
           combine(
-            redirect_domain_mappings | default([]) | 
+            redirect_domain_mappings | default([]) |
             items2dict(key_name='source', value_name='source'),
             recursive=True
           )) |
@@ -75,10 +79,6 @@
           )
         }}
 
-  - name: Merge networks definitions
-    set_fact:
-      networks: "{{ defaults_networks | combine(networks | default({}, true), recursive=True) }}"
-  
   - name: Merge oidc configuration
     set_fact:
       oidc: "{{ defaults_oidc | combine(oidc | default({}, true), recursive=True) }}"

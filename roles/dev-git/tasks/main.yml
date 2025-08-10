@@ -1,5 +1,5 @@
 - name: install git
-  pacman:
+  package:
     name: git
     state:  present
   when: run_once_dev_git is not defined

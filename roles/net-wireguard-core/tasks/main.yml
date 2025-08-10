@@ -1,11 +1,11 @@
 - name: install wireguard for Arch
-  pacman: 
+  package:
     name:   wireguard-tools
     state:  present
   when: ansible_os_family == "Archlinux"
 
 - name: install wireguard for Ubuntu
-  apt: 
+  apt:
     name:   wireguard
     state:  present
   when: ansible_os_family == "Debian"
